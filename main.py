@@ -18,12 +18,16 @@ def init_driver():
         options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--disable-gpu')
+        options.add_argument('--remote-debugging-port=9222')
+        options.add_argument('--disable-web-security')
+        options.add_argument('--allow-running-insecure-content')
         
-        # Fix cho Render/Linux: Chỉ định binary và driver path rõ ràng
-        options.binary_location = '/usr/bin/google-chrome'  # Đường dẫn chuẩn trên Render
-        driver_executable_path = '/usr/bin/chromedriver'    # Nếu cần, hoặc để library tự quản lý
+        # Fix đường dẫn cho Render (Chrome binary và driver path chuẩn 2025)
+        options.binary_location = '/usr/bin/google-chrome'  # Chrome binary sau khi cài
+        # Không set driver_executable_path, để uc tự quản lý (nó sẽ dùng /usr/local/bin/chromedriver)
         
-        driver = uc.Chrome(options=options, driver_executable_path=driver_executable_path)
+        driver = uc.Chrome(options=options, version_main=130)  # Version Chrome 2025, tự patch nếu cần
     return driver
 
 @app.route('/api.php', methods=['GET'])
