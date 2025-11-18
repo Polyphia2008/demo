@@ -23,11 +23,13 @@ def init_driver():
         options.add_argument('--disable-web-security')
         options.add_argument('--allow-running-insecure-content')
         
-        # Fix đường dẫn cho Render (Chrome binary và driver path chuẩn 2025)
-        options.binary_location = '/usr/bin/google-chrome'  # Chrome binary sau khi cài
-        # Không set driver_executable_path, để uc tự quản lý (nó sẽ dùng /usr/local/bin/chromedriver)
+        # Fix cho Render: Chỉ định đường dẫn Chrome binary chính xác (sau khi cài apt)
+        browser_executable_path = '/usr/bin/google-chrome'
         
-        driver = uc.Chrome(options=options, version_main=130)  # Version Chrome 2025, tự patch nếu cần
+        driver = uc.Chrome(
+            options=options,
+            browser_executable_path=browser_executable_path  # Thêm dòng này để chỉ định binary
+        )
     return driver
 
 @app.route('/api.php', methods=['GET'])
