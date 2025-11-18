@@ -15,10 +15,15 @@ def init_driver():
     global driver
     if driver is None:
         options = uc.ChromeOptions()
-        options.add_argument('--headless')  # Chạy ẩn
+        options.add_argument('--headless')
         options.add_argument('--no-sandbox')
         options.add_argument('--disable-dev-shm-usage')
-        driver = uc.Chrome(options=options)
+        
+        # Fix cho Render/Linux: Chỉ định binary và driver path rõ ràng
+        options.binary_location = '/usr/bin/google-chrome'  # Đường dẫn chuẩn trên Render
+        driver_executable_path = '/usr/bin/chromedriver'    # Nếu cần, hoặc để library tự quản lý
+        
+        driver = uc.Chrome(options=options, driver_executable_path=driver_executable_path)
     return driver
 
 @app.route('/api.php', methods=['GET'])
