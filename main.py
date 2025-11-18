@@ -23,12 +23,12 @@ def init_driver():
         options.add_argument('--disable-web-security')
         options.add_argument('--allow-running-insecure-content')
         
-        # Fix cho Render: Chỉ định đường dẫn Chrome binary chính xác (sau khi cài apt)
-        browser_executable_path = '/usr/bin/google-chrome'
+        # Fix cho Render: Sử dụng Chromium có sẵn (binary path chuẩn trên Render)
+        browser_executable_path = '/usr/bin/chromium-browser'  # Chromium trên Render
         
         driver = uc.Chrome(
             options=options,
-            browser_executable_path=browser_executable_path  # Thêm dòng này để chỉ định binary
+            browser_executable_path=browser_executable_path  # Chỉ định binary
         )
     return driver
 
